@@ -25,18 +25,18 @@ import requests
 from matplotlib.dates import DateFormatter
 from matplotlib.figure import Figure
 
-TELEGRAM_TOKEN = '9287289855:AAEB6ZuHzvmCVgtX6Sgjbqd-Hyv96-DxCdI'  
-ALERT_CHAT_ID = -969316925               
+TELEGRAM_TOKEN = ''  
+ALERT_CHAT_ID =     
 SEND_TO_TELEGRAM = True                  
 DASHBOARD_URL = ''                       
  
-OWNER = 'darina-radvilovich-fhg4877'
-SRC_DB = 'simulator_20260920'
+OWNER = 'darina-radvilovich'
+SRC_DB = ''
 connection = {
-    'host': 'http://clickhouse.lab.karpov.courses:8123',
+    'host': '',
     'database': SRC_DB,
-    'user': 'student',
-    'password': 'dpo_python_2020',
+    'user': '',
+    'password': '',
 }
  
 HISTORY_DAYS = 14        
@@ -75,7 +75,7 @@ def get_data(history_days=HISTORY_DAYS):
                    uniqExact(user_id) AS feed_users,
                    countIf(action = 'view') AS views,
                    countIf(action = 'like') AS likes
-            FROM {db}.feed_actions
+            FROM {db}.1
             WHERE {cond}
             GROUP BY ts {grp}
             ORDER BY ts
@@ -84,7 +84,7 @@ def get_data(history_days=HISTORY_DAYS):
             SELECT toStartOfFifteenMinutes(time) AS ts {sel},
                    uniqExact(user_id) AS msg_users,
                    count() AS messages
-            FROM {db}.message_actions
+            FROM {db}.2
             WHERE {cond}
             GROUP BY ts {grp}
             ORDER BY ts
