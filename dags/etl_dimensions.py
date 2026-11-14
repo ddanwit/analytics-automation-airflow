@@ -212,7 +212,7 @@ def dag_etl_radvilovich():  # имя DAG должно быть уникальн�
         ph.to_clickhouse(df=final, table=TABLE_NAME, index=False, connection=connection_test)
         print(f'Загружено {len(final)} строк за {day} в test.{TABLE_NAME}')
 
-    # ------------------------------------------------------ порядок выполнения
+    #порядок выполнения
     feed = extract_feed()
     msg = extract_messages()
     cube = merge_tables(feed, msg)
