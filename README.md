@@ -21,12 +21,12 @@
 
 ## Что внутри
 
-| Компонент | Ноутбук (разработка) | DAG (продакшн-код) | Расписание | Результат |
-|---|---|---|---|---|
-| ETL-пайплайн | [`01_etl_pipeline.ipynb`](notebooks/01_etl_pipeline.ipynb) | [`dags/etl_dimensions.py`](dags/etl_dimensions.py) | ежедневно, за вчера | таблица метрик в разрезах пол / возраст / ОС в ClickHouse |
-| Система алертов | [`02_alerts_system.ipynb`](notebooks/02_alerts_system.ipynb) | [`dags/alerts.py`](dags/alerts.py) | каждые 15 минут | сообщение с графиком в Telegram при аномалии |
-| Отчёты в Telegram | [`03_telegram_reports.ipynb`](notebooks/03_telegram_reports.ipynb) | [`dags/feed_report.py`](dags/feed_report.py), [`dags/app_report.py`](dags/app_report.py) | ежедневно, 11:00 | текст + графики + CSV в чате |
-| Дашборды | — | — | — | [Superset](#дашборды-superset) |
+| Компонент | DAG (продакшн-код) | Расписание | Результат |
+|---|---|---|---|
+| ETL-пайплайн | [`dags/etl_dimensions.py`](dags/etl_dimensions.py) | ежедневно, за вчера | таблица метрик в разрезах пол / возраст / ОС в ClickHouse |
+| Система алертов | [`dags/alerts.py`](dags/alerts.py) | каждые 15 минут | сообщение с графиком в Telegram при аномалии |
+| Отчёты в Telegram | [`dags/feed_report.py`](dags/feed_report.py), [`dags/app_report.py`](dags/app_report.py) | ежедневно, 11:00 | текст + графики + CSV в чате |
+| Дашборды | — | — | [Superset](#дашборды-superset) |
 
 Ноутбуки содержат разработку и отладку логики (запросы, выбор метода, проверки), а в папке `dags/` лежит итоговый код, который запускается в Airflow.
 
