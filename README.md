@@ -24,8 +24,8 @@
 | Компонент | DAG (продакшн-код) | Расписание | Результат |
 |---|---|---|---|
 | ETL-пайплайн | [`dags/etl_dimensions.py`](dags/etl_dimensions.py) | ежедневно, за вчера | таблица метрик в разрезах пол / возраст / ОС в ClickHouse |
-| Система алертов | [`dags/alerts.py`](dags/alerts.py) | каждые 15 минут | сообщение с графиком в Telegram при аномалии |
-| Отчёты в Telegram | [`dags/feed_report.py`](dags/feed_report.py), [`dags/app_report.py`](dags/app_report.py) | ежедневно, 11:00 | текст + графики + CSV в чате |
+| Система алертов | [`dags/dag_alerts.py`](dags/dag_alerts.py) | каждые 15 минут | сообщение с графиком в Telegram при аномалии |
+| Отчёты в Telegram | [`dags/telegram_reports.py`](dags/telegram_reports.py)| ежедневно, 11:00 | текст + графики + CSV в чате |
 | Дашборды | — | — | [Superset](#дашборды-superset) |
 
 Ноутбуки содержат разработку и отладку логики (запросы, выбор метода, проверки), а в папке `dags/` лежит итоговый код, который запускается в Airflow.
@@ -75,6 +75,8 @@ extract_messages ──┘                 ├─> transform_gender ─┼─> l
 | `users_received`, `users_sent` | Int64 | от скольких пользователей получили / скольким отправили |
 
 > Показатели `users_received` и `users_sent` суммируются по пользователям среза, поэтому один и тот же собеседник может быть посчитан несколько раз.
+
+В результате получаем таблицу следующего вида: 
 
 ## 2. Ежедневные отчёты в Telegram
 
@@ -176,7 +178,7 @@ Python (pandas, numpy, matplotlib, requests, pandahouse) · Apache Airflow (Task
 
 ## Как повторить
 
-1. В начале каждого DAG-файла замените заглушки своими значениями: параметры подключения к ClickHouse, `TELEGRAM_TOKEN`, `CHAT_ID`, имя таблицы для ETL и `owner`. **Не публикуйте реальные пароли и токены.**
+1. В начале каждого DAG-файла замените заглушки своими значениями: параметры подключения к ClickHouse, `TELEGRAM_TOKEN`, `CHAT_ID`, имя таблицы для ETL и `owner`.
 2. Бот создаётся через [@BotFather](https://t.me/BotFather), его нужно добавить в нужный чат. `chat_id` можно получить через метод `getUpdates`.
 3. Положите DAG-файлы в папку `dags/` вашего Airflow, дождитесь появления DAG в интерфейсе и включите его.
 4. Для проверки без Telegram установите в DAG-файлах `SEND_TO_TELEGRAM = False`: отчёты и алерты будут печататься в лог.
